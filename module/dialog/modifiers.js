@@ -20,7 +20,6 @@ import { defaultTargetLocations } from "../lookups.js"
         weapon: null,
         // Use like [[mod1, mod2], [mod3, mod4, mod5]] etc to add groupings,
         modifierGroups: [],
-        targetTokens: [], // id and name for each target token
         // Extra mod field for miscellaneous mod
         extraMod: true,
 
@@ -47,7 +46,6 @@ import { defaultTargetLocations } from "../lookups.js"
 
       let data = {
         modifierGroups: this.options.modifierGroups,
-        targetTokens: this.options.targetTokens,
         // You can't refer to indices in FormApplication form entries as far as I know, so let's give them a place to live
         defaultValues: {}
       };
@@ -62,10 +60,7 @@ import { defaultTargetLocations } from "../lookups.js"
       data.modifierGroups.forEach(group => {
         group.forEach(modifier => {
           // path towards modifier's field template
-          let fieldPath = `fields/${modifier.choices 
-            ? "select" : typeof(modifier.defaultValue)}`;
- 
-          modifier.fieldPath = fieldPath;
+          modifier.fieldPath = `fields/${modifier.choices ? "select" : typeof(modifier.defaultValue)}`;
           deepSet(data.defaultValues, modifier.dataPath, (modifier.defaultValue !== undefined ? modifier.defaultValue : ""));
         })
       })

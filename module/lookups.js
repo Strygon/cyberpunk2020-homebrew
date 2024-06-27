@@ -23,15 +23,7 @@ export let attackSkills = {
 }
 
 export function getStatNames() {
-    let actorTemplate = game.system.template.Actor;
-    // v11 and earlier format
-    if (actorTemplate.template) {
-        return actorTemplate.templates.stats.stats;
-    }
-    // v12 onwards
-    else {
-        return actorTemplate.character.stats;
-    }
+    return Object.keys(game.system.template.Actor.templates.stats.stats)
 }
 
 // How a weapon attacks. Something like pistol or an SMG have rigid rules on how they can attack, but shotguns can be regular or auto shotgun, exotic can be laser, etc. So this is for weird and special stuff that isn't necessarily covered by the weapon's type or other information
@@ -153,7 +145,7 @@ export let defaultAreaLookup = {
 }
 export function defaultHitLocations() { return game.system.template.Actor.templates.hitLocations.hitLocations; }
 
-export function rangedModifiers(weapon, targetTokens=[]) {
+export function rangedModifiers(weapon) {
     let range = weapon.system.range || 50;
     let fireModes = weapon.__getFireModes() || [];
     return [
@@ -185,18 +177,12 @@ export function rangedModifiers(weapon, targetTokens=[]) {
             }),
         },
         {
-            localKey: "TargetArea",
+            localKey: "AimingAt",
             dataPath: "targetArea",
             defaultValue: "",
             // TODO: Have this dependent on target
             choices: defaultTargetLocations,
             allowBlank: true
-        },
-        {
-            localKey: "TargetsCount",
-            dataPath: "targetsCount",
-            defaultValue: targetTokens.length,
-            readOnly: targetTokens.length != 0,
         },
         {localKey:"Ambush", dataPath:"ambush",defaultValue: false},
         {localKey:"Blinded", dataPath:"blinded",defaultValue: false},
@@ -248,7 +234,7 @@ export function martialOptions(actor) {
 export function meleeBonkOptions() {
     return [[
         {
-            localKey: "TargetArea",
+            localKey: "AimingAt",
             dataPath: "targetArea",
             defaultValue: "",
             // TODO: Have this dependent on target
