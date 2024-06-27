@@ -28,11 +28,7 @@
         }
     }
 
-    >label {
-        &.skill-roll {
-            flex: 4;
-        }
-    }
+    
 
 
     label.chip-toggle {
@@ -46,6 +42,9 @@
             font-variant: all-small-caps;
         }
         .skill-stat-display {
+            flex: 1;
+        }
+        .skill-ip-display{
             flex: 1;
         }
     }
