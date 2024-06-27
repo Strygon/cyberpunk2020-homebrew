@@ -28,6 +28,12 @@
         }
     }
 
+    >label {
+        &.skill-roll {
+            flex: 4;
+        }
+    }
+
 
     label.chip-toggle {
         background-color: $text-colour;
